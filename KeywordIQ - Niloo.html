@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>KeywordIQ — 3-Part SEO Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --red:#DC343B;--orange:#FFA000;--green:#177245;--blue:#006DB0;
+  --onyx:#444444;--bg:#f0efe9;--sur:#fff;--sur2:#f7f6f0;
+  --bdr:#D8D8D4;--tx:#3a3a38;--tx2:#6b6b68;--tx3:#a0a09c;
+  --r10:#fdeaea;--o10:#fff3e0;--g10:#e3f2ea;--b10:#e6f2fb;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:14px;scroll-behavior:smooth;}
+body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column;}
+
+/* NAV */
+.nav{background:var(--onyx);border-bottom:3px solid var(--red);position:sticky;top:0;z-index:300;}
+.nav-in{display:flex;overflow-x:auto;scrollbar-width:none;max-width:960px;margin:0 auto;align-items:center;}
+.nav-in::-webkit-scrollbar{display:none;}
+.ttab{padding:12px 14px;font-size:11px;font-weight:700;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,.35);letter-spacing:.07em;text-transform:uppercase;border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;transition:all .14s;flex-shrink:0;font-family:inherit;}
+.ttab.active{color:var(--orange);border-bottom:3px solid var(--orange);}
+.ttab:hover:not(.active){color:rgba(255,255,255,.7);}
+.nav-divider{width:1px;height:18px;background:rgba(255,255,255,.12);flex-shrink:0;margin:0 2px;}
+
+/* PAGES */
+.pg{display:none;padding:28px 16px 70px;max-width:900px;margin:0 auto;width:100%;}
+.pg.active{display:block;}
+
+/* TYPE */
+.ey{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:800;margin-bottom:5px;}
+.h1{font-size:clamp(20px,5vw,28px);font-weight:900;color:var(--onyx);line-height:1.15;margin-bottom:.55rem;}
+.h1 em{color:var(--red);font-style:normal;}
+.h2{font-size:clamp(14px,3vw,17px);font-weight:800;color:var(--onyx);margin-bottom:.4rem;}
+.body{font-size:13px;line-height:1.8;color:var(--tx2);}
+.callout{background:var(--sur);border-left:4px solid var(--orange);border-radius:0 10px 10px 0;padding:.8rem 1.1rem;margin:.9rem 0;font-size:12px;line-height:1.75;color:var(--tx2);}
+.callout strong{color:var(--onyx);}
+.callout.green{border-left-color:var(--green);}
+.callout.blue{border-left-color:var(--blue);}
+.callout.red{border-left-color:var(--red);}
+
+/* BADGES */
+.badge{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:700;display:inline-block;}
+.b-r{background:var(--r10);color:var(--red);}
+.b-o{background:var(--o10);color:#7a4a00;}
+.b-g{background:var(--g10);color:var(--green);}
+.b-b{background:var(--b10);color:var(--blue);}
+.b-k{background:var(--sur2);color:var(--tx2);border:1px solid var(--bdr);}
+.tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:.75rem;}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;}
+.card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:1rem 1.15rem;}
+.card-sm{background:var(--sur2);border-radius:10px;padding:.65rem .9rem;}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:9px;margin:1rem 0;}
+.stat-card{background:var(--sur);border:1px solid var(--bdr);border-radius:12px;padding:.85rem;text-align:center;}
+.stat-num{font-size:clamp(18px,4vw,24px);font-weight:900;}
+.stat-lbl{font-size:10px;color:var(--tx3);margin-top:3px;line-height:1.4;}
+
+/* PART HEADER CARDS */
+.part-hero{border-radius:16px;padding:1.4rem 1.5rem;margin-bottom:1.25rem;position:relative;overflow:hidden;}
+.part-hero.p1{background:linear-gradient(135deg,#1a1a1a,#2d1a1a);border:1px solid rgba(220,52,59,.25);}
+.part-hero.p2{background:linear-gradient(135deg,#1a1a1a,#1a2d1a);border:1px solid rgba(23,114,69,.25);}
+.part-hero.p3{background:linear-gradient(135deg,#1a1a1a,#1a1a2d);border:1px solid rgba(0,109,176,.25);}
+.part-num{font-size:clamp(42px,10vw,64px);font-weight:900;color:rgba(255,255,255,.07);position:absolute;right:16px;top:8px;line-height:1;user-select:none;}
+.part-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;}
+.part-hero.p1 .part-label{color:var(--red);}
+.part-hero.p2 .part-label{color:var(--green);}
+.part-hero.p3 .part-label{color:var(--blue);}
+.part-title{font-size:clamp(16px,3.5vw,22px);font-weight:900;color:white;margin-bottom:.5rem;line-height:1.2;}
+.part-sub{font-size:12px;color:rgba(255,255,255,.55);line-height:1.7;max-width:500px;}
+.part-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:.9rem;}
+.part-chip{font-size:10px;padding:4px 10px;border-radius:20px;font-weight:700;background:rgba(255,255,255,.08);color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.1);}
+.part-deliverable{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:.7rem 1rem;margin-top:.85rem;font-size:12px;color:rgba(255,255,255,.8);}
+.part-deliverable strong{color:white;}
+.part-deliverable::before{content:"✓  Deliverable: ";font-weight:800;}
+.part-cta{margin-top:.75rem;font-size:12px;color:rgba(255,255,255,.55);font-style:italic;}
+.part-cta strong{color:rgba(255,255,255,.85);font-style:normal;}
+
+/* WHAT HAPPENS NEXT BANNER */
+.next-banner{border-radius:12px;padding:1rem 1.15rem;display:flex;align-items:flex-start;gap:12px;margin-top:1.25rem;}
+.next-banner.green{background:var(--g10);border:1.5px solid #9ed5b8;}
+.next-banner.blue{background:var(--b10);border:1.5px solid #a8c6e8;}
+.next-banner.orange{background:var(--o10);border:1.5px solid #ffd080;}
+.nb-icon{font-size:22px;flex-shrink:0;}
+.nb-body{flex:1;min-width:0;}
+.nb-title{font-size:12px;font-weight:800;color:var(--onyx);margin-bottom:4px;}
+.nb-text{font-size:11px;color:var(--tx2);line-height:1.7;}
+.nb-text strong{color:var(--onyx);}
+.nb-cta{display:inline-block;margin-top:7px;font-size:11px;font-weight:800;padding:5px 12px;border-radius:20px;color:white;cursor:default;}
+.nb-cta.red{background:var(--red);}
+.nb-cta.green{background:var(--green);}
+.nb-cta.blue{background:var(--blue);}
+
+/* DATA REQUIREMENTS */
+.dc{border-radius:12px;padding:.9rem 1rem;border:1.5px solid;}
+.dc-ag{background:var(--r10);border-color:#f0b8bb;}
+.dc-fr{background:var(--g10);border-color:#9ed5b8;}
+.dc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.45rem;flex-wrap:wrap;}
+.dc-title{font-size:12px;font-weight:800;color:var(--onyx);}
+.dc-body{font-size:11px;line-height:1.65;color:var(--tx2);margin-bottom:.45rem;}
+.dc-list{list-style:none;}
+.dc-list li{font-size:11px;color:var(--tx);padding:2px 0;}
+.dc-list li::before{content:"→ ";color:var(--tx3);}
+.dc-warn{background:rgba(220,52,59,.08);border:1px solid rgba(220,52,59,.18);border-radius:6px;padding:5px 8px;font-size:10px;color:var(--red);font-weight:700;margin-top:7px;}
+.dc-ok{background:rgba(23,114,69,.08);border:1px solid rgba(23,114,69,.18);border-radius:6px;padding:5px 8px;font-size:10px;color:var(--green);font-weight:700;margin-top:7px;}
+
+/* STEPS */
+.step{display:flex;gap:10px;margin-bottom:.85rem;align-items:flex-start;}
+.snum{width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;flex-shrink:0;margin-top:1px;}
+.sc h4{font-size:12px;font-weight:800;color:var(--onyx);margin-bottom:2px;}
+.sc p{font-size:11px;color:var(--tx2);line-height:1.65;}
+.code{background:var(--onyx);border-radius:6px;padding:.4rem .7rem;font-family:'Courier New',monospace;font-size:10px;color:var(--orange);margin-top:5px;line-height:1.6;overflow-x:auto;word-break:break-all;}
+.tpill{display:inline-block;background:var(--sur2);border:1px solid var(--bdr);border-radius:4px;font-size:9px;padding:1px 6px;margin:2px 2px 0 0;color:var(--tx2);font-weight:700;}
+
+/* OVERVIEW FLOW */
+.flow{display:flex;align-items:stretch;flex-wrap:wrap;gap:0;margin:1.1rem 0;}
+.flow-item{flex:1;min-width:140px;background:var(--sur);border:1px solid var(--bdr);padding:.85rem .9rem;position:relative;}
+.flow-item:first-child{border-radius:12px 0 0 12px;}
+.flow-item:last-child{border-radius:0 12px 12px 0;}
+.flow-item+.flow-item{border-left:none;}
+.flow-num{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:3px;}
+.flow-title{font-size:12px;font-weight:800;color:var(--onyx);margin-bottom:2px;}
+.flow-sub{font-size:10px;color:var(--tx2);line-height:1.5;}
+.flow-arrow{width:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--tx3);font-size:14px;background:var(--sur);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);}
+@media(max-width:600px){
+  .flow{flex-direction:column;}
+  .flow-item{border-radius:0!important;border-left:1px solid var(--bdr)!important;border-top:none!important;}
+  .flow-item:first-child{border-radius:12px 12px 0 0!important;border-top:1px solid var(--bdr)!important;}
+  .flow-item:last-child{border-radius:0 0 12px 12px!important;}
+  .flow-arrow{display:none;}
+}
+
+/* ══════════════════════════════
+   DEMO SHELL
+══════════════════════════════ */
+.demo-shell{background:var(--onyx);border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.07);}
+.demo-titlebar{background:rgba(0,0,0,.3);padding:.5rem .9rem;display:flex;align-items:center;gap:7px;}
+.demo-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.demo-bar-title{font-size:10px;color:rgba(255,255,255,.3);font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.demo-stepper{display:flex;background:rgba(0,0,0,.22);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.demo-stepper::-webkit-scrollbar{display:none;}
+.dsb{flex:0 0 auto;padding:8px 11px;border:none;background:transparent;font-family:inherit;font-size:10px;font-weight:700;color:rgba(255,255,255,.28);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .14s;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2;}
+.dsb .si{font-size:13px;}
+.dsb.active{color:var(--orange);border-bottom-color:var(--orange);}
+.dsb:hover:not(.active){color:rgba(255,255,255,.6);}
+.demo-panel{display:none;padding:.9rem;}
+.demo-panel.active{display:block;}
+
+/* Inside demo */
+.d-form{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:.9rem;}
+.d-title{font-size:13px;font-weight:800;color:white;margin-bottom:.75rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.d-step-badge{background:rgba(23,114,69,.25);color:#5dcaa5;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:800;margin-left:auto;white-space:nowrap;}
+.d-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px;margin-bottom:.8rem;}
+.d-field{display:flex;flex-direction:column;gap:3px;}
+.d-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.3);}
+.d-val{background:rgba(255,255,255,.07);border:1.5px solid rgba(23,114,69,.4);border-radius:8px;padding:.45rem .7rem;font-size:12px;color:white;font-weight:700;}
+.d-note{background:rgba(255,160,0,.1);border:1px solid rgba(255,160,0,.18);border-radius:8px;padding:6px 10px;font-size:11px;color:rgba(255,255,255,.55);margin-bottom:.75rem;}
+.d-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem;gap:7px;flex-wrap:wrap;}
+.d-btn{padding:.48rem .95rem;border-radius:8px;font-family:inherit;font-size:11px;font-weight:800;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:rgba(255,255,255,.65);transition:opacity .12s;}
+.d-btn.primary{background:var(--red);color:white;border-color:var(--red);}
+.d-btn.success{background:var(--green);color:white;border-color:var(--green);}
+.d-btn.blue{background:var(--blue);color:white;border-color:var(--blue);}
+.d-btn:hover{opacity:.82;}
+
+/* KPI cards in demo */
+.d-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px;margin-bottom:.85rem;}
+.d-kpi{border-radius:9px;padding:.65rem .6rem;text-align:center;}
+.d-kpi.up{background:linear-gradient(135deg,#0e5c36,#177245);}
+.d-kpi.nt{background:linear-gradient(135deg,#0a4070,#006DB0);}
+.d-kpi.dn{background:linear-gradient(135deg,#8b2020,#DC343B);}
+.d-kpi.wn{background:linear-gradient(135deg,#7a4800,#FFA000);}
+.d-kpi-num{font-size:clamp(15px,4vw,20px);font-weight:900;color:white;}
+.d-kpi-lbl{font-size:9px;color:rgba(255,255,255,.6);margin-top:2px;line-height:1.3;}
+
+/* Chart wrappers */
+.cw{position:relative;width:100%;overflow:hidden;}
+.cw canvas{display:block;width:100%!important;height:100%!important;}
+
+/* Keyword type cards */
+.ktype-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px;margin-bottom:.85rem;}
+.ktype-card{background:rgba(255,255,255,.05);border-radius:9px;padding:.65rem .55rem;text-align:center;border:1px solid rgba(255,255,255,.07);}
+.ktype-pct{font-size:20px;font-weight:900;margin-bottom:2px;}
+.ktype-lbl{font-size:9px;color:rgba(255,255,255,.45);font-weight:600;line-height:1.3;}
+.ktype-n{font-size:9px;color:rgba(255,255,255,.25);margin-top:2px;}
+
+/* Stability table */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;background:rgba(255,255,255,.03);border-radius:10px;padding:.65rem;}
+.stab-tbl{width:100%;border-collapse:collapse;min-width:380px;}
+.stab-tbl th{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.28);padding:5px 6px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left;white-space:nowrap;}
+.stab-tbl td{padding:6px 6px;border-bottom:1px solid rgba(255,255,255,.04);font-size:11px;color:rgba(255,255,255,.75);vertical-align:middle;}
+.stab-tbl tr:last-child td{border:none;}
+.score-bar{display:flex;align-items:center;gap:5px;}
+.score-track{height:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;flex:1;min-width:36px;}
+.score-fill{height:100%;border-radius:3px;}
+.score-num{font-size:10px;font-weight:800;min-width:22px;text-align:right;}
+.vbadge{font-size:9px;padding:2px 7px;border-radius:8px;font-weight:800;white-space:nowrap;}
+.vb-s{background:rgba(23,114,69,.25);color:#5dcaa5;}
+.vb-t{background:rgba(0,109,176,.22);color:#60b3e8;}
+.vb-n{background:rgba(139,92,246,.2);color:#c084fc;}
+.vb-w{background:rgba(255,160,0,.2);color:#ffa000;}
+
+/* Portfolio panels */
+.port-split{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:9px;margin-bottom:.85rem;}
+.port-panel{border-radius:12px;padding:.85rem;}
+.port-panel.stable{background:rgba(23,114,69,.12);border:1px solid rgba(23,114,69,.22);}
+.port-panel.volatile{background:rgba(220,52,59,.08);border:1px solid rgba(220,52,59,.18);}
+.port-panel-head{display:flex;align-items:center;gap:7px;margin-bottom:.6rem;}
+.port-panel-title{font-size:12px;font-weight:800;color:white;}
+.port-panel-sub{font-size:9px;color:rgba(255,255,255,.38);margin-top:1px;}
+.port-kw-list{display:flex;flex-direction:column;gap:4px;}
+.port-kw{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border-radius:7px;padding:5px 7px;}
+.port-kw-name{font-size:10px;font-weight:700;color:white;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.port-kw-bar{height:3px;border-radius:2px;overflow:hidden;flex:2;background:rgba(255,255,255,.07);}
+.port-kw-fill{height:100%;border-radius:2px;}
+.port-kw-score{font-size:9px;font-weight:800;flex-shrink:0;}
+
+/* LLM blocks */
+.llm-blk{background:rgba(255,255,255,.04);border:1px solid rgba(255,160,0,.18);border-radius:10px;padding:.75rem;margin-bottom:.65rem;}
+.llm-head{display:flex;align-items:center;gap:7px;margin-bottom:.5rem;flex-wrap:wrap;}
+.llm-tag{font-size:9px;padding:2px 7px;border-radius:8px;background:rgba(255,160,0,.15);color:#ffa000;font-weight:800;border:1px solid rgba(255,160,0,.22);}
+.llm-kw{font-size:12px;font-weight:800;color:white;}
+.llm-type{font-size:11px;font-weight:700;margin-bottom:3px;}
+.llm-reason{font-size:10px;color:rgba(255,255,255,.48);line-height:1.6;}
+.llm-json{background:rgba(0,0,0,.3);border-radius:6px;padding:5px 8px;font-family:'Courier New',monospace;font-size:10px;color:rgba(255,160,0,.8);line-height:1.5;margin-top:.45rem;overflow-x:auto;word-break:break-all;}
+
+/* Simulate explanation */
+.sim-explain{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:.85rem;margin-bottom:.8rem;}
+.sim-explain-title{font-size:12px;font-weight:800;color:var(--orange);margin-bottom:.55rem;}
+.sim-explain-row{display:flex;align-items:flex-start;gap:8px;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.sim-explain-row:last-child{border:none;padding-bottom:0;}
+.sim-swatch{width:28px;height:4px;border-radius:2px;flex-shrink:0;margin-top:6px;}
+.sim-swatch.dashed{background:transparent;border-top:2.5px dashed rgba(255,255,255,.3);height:0;margin-top:8px;}
+.sim-explain-text{font-size:11px;color:rgba(255,255,255,.62);line-height:1.65;}
+.sim-explain-text strong{color:white;}
+.sim-legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:.75rem;}
+.sim-leg-item{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:rgba(255,255,255,.55);}
+
+/* Alerts */
+.alert-blk{border-radius:10px;padding:.75rem .9rem;display:flex;align-items:flex-start;gap:8px;margin-bottom:.65rem;}
+.alert-blk.red{background:rgba(220,52,59,.12);border:1px solid rgba(220,52,59,.25);}
+.alert-blk.warn{background:rgba(255,160,0,.09);border:1px solid rgba(255,160,0,.22);}
+.alert-blk.info{background:rgba(0,109,176,.09);border:1px solid rgba(0,109,176,.22);}
+.alert-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.alert-text{font-size:11px;color:rgba(255,255,255,.65);line-height:1.7;}
+.alert-text strong{color:white;}
+
+/* What happens next (inside demo panels) */
+.demo-next{background:rgba(23,114,69,.15);border:1px solid rgba(23,114,69,.3);border-radius:10px;padding:.85rem;margin-top:.8rem;}
+.demo-next-title{font-size:11px;font-weight:800;color:#5dcaa5;margin-bottom:.45rem;display:flex;align-items:center;gap:6px;}
+.demo-next-body{font-size:11px;color:rgba(255,255,255,.6);line-height:1.7;}
+.demo-next-body strong{color:white;}
+.demo-next-action{display:inline-block;margin-top:.6rem;font-size:11px;font-weight:800;padding:5px 13px;border-radius:20px;background:#177245;color:white;border:none;}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;}
+.sk-col{border-radius:12px;padding:.9rem;}
+.sk-col.has{background:var(--g10);border:1.5px solid #9ed5b8;}
+.sk-col.part{background:var(--o10);border:1.5px solid #ffd080;}
+.sk-col.new{background:var(--r10);border:1.5px solid #f0b8bb;}
+.sk-head{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.55rem;padding-bottom:.35rem;border-bottom:1.5px solid currentColor;}
+.sk-col.has .sk-head{color:var(--green);}
+.sk-col.part .sk-head{color:#7a4a00;}
+.sk-col.new .sk-head{color:var(--red);}
+.sk-item{font-size:11px;padding:2.5px 0;line-height:1.5;color:var(--onyx);}
+.rb{display:flex;height:20px;border-radius:10px;overflow:hidden;margin:.5rem 0 .35rem;}
+.rb-g{background:var(--green);display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:800;}
+.rb-o{background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:800;}
+.rb-r{background:var(--red);display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:800;}
+
+footer{margin-top:auto;background:var(--onyx);color:rgba(255,255,255,.35);text-align:center;padding:.85rem 20px;font-size:11px;flex-shrink:0;}
+footer strong{color:rgba(255,255,255,.7);}
+
+@media(max-width:500px){
+  .ttab{padding:10px 10px;font-size:10px;}
+  .dsb{padding:7px 8px;font-size:9px;}
+  .dsb .si{font-size:12px;}
+  .d-grid{grid-template-columns:1fr 1fr!important;}
+  .ktype-grid{grid-template-columns:repeat(3,1fr)!important;}
+  .port-split{grid-template-columns:1fr!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-in">
+    <button class="ttab active" onclick="T('overview',this)">Overview</button>
+    <div class="nav-divider"></div>
+    <button class="ttab" onclick="T('p1',this)">Part 1 — Intelligence</button>
+    <button class="ttab" onclick="T('p2',this)">Part 2 — Portfolio</button>
+    <button class="ttab" onclick="T('p3',this)">Part 3 — Simulation</button>
+    <div class="nav-divider"></div>
+    <button class="ttab" onclick="T('data',this)">Data & Access</button>
+    <button class="ttab" onclick="T('skills',this)">Skills</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     OVERVIEW
+════════════════════════════════ -->
+<div class="pg active" id="pg-overview">
+  <div class="ey">Project 02 — Niloofar Mastali</div>
+  <div class="h1">KeywordIQ — <em>Three parts. Three deliverables.</em></div>
+  <p class="body">One project, broken into three self-contained parts. Each part delivers something useful on its own and unlocks the next. The agency can approve each part before Niloofar proceeds.</p>
+
+  <!-- WHAT IS THIS REALLY -->
+  <div class="callout" style="margin-top:1rem;"><strong>What this tool does in one sentence:</strong> A salesperson types in a prospect's domain and their competitors. Within seconds they see which keywords to invest in long-term, which ones are about to trend, and a projection of what that prospect's traffic looks like 12 months from now — with and without SEO work. They leave the meeting with a personalised PDF.</div>
+
+  <!-- THREE PART FLOW -->
+  <div style="margin:1.4rem 0 .65rem;"><div class="ey">The three parts</div></div>
+
+  <div class="flow">
+    <div class="flow-item">
+      <div class="flow-num" style="color:var(--red);">Part 1 · Weeks 1–3</div>
+      <div class="flow-title">Keyword Intelligence Report</div>
+      <div class="flow-sub">Discover all competitor keywords. Classify by type using Claude API. Deliver a PDF report the agency can use in client meetings today.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-item">
+      <div class="flow-num" style="color:var(--green);">Part 2 · Weeks 4–5</div>
+      <div class="flow-title">Two-Portfolio Dashboard</div>
+      <div class="flow-sub">Score every keyword for stability. Split into Stable (invest steadily) vs Volatile (act fast). Live Streamlit screen the agency opens in any sales meeting.</div>
+    </div>
+    <div class="flow-arrow">›</div>
+    <div class="flow-item">
+      <div class="flow-num" style="color:var(--blue);">Part 3 · Weeks 6–8</div>
+      <div class="flow-title">Growth Simulation + Alerts</div>
+      <div class="flow-sub">ML growth curves showing traffic with and without SEO. Live alerts when volatile keywords start trending. Prospect sees their personalised 12-month forecast.</div>
+    </div>
+  </div>
+
+  <!-- WHO DOES WHAT -->
+  <div style="margin:1.4rem 0 .65rem;"><div class="ey">Who does what and what they get</div></div>
+  <div class="g2" style="margin-bottom:1.25rem;">
+    <div class="card" style="border-top:3px solid var(--red);">
+      <div style="font-size:13px;font-weight:800;color:var(--red);margin-bottom:.65rem;">🏢 The Agency (SEO Agentur Wien)</div>
+      <div style="font-size:11px;color:var(--tx2);line-height:1.75;">Provides historical client data and SEMrush access. Gets a live tool their salespeople open in meetings to show any prospect a personalised keyword strategy and growth forecast. Instead of showing a past client's results, they show <strong style="color:var(--onyx);">this prospect's own data.</strong></div>
+      <div class="tag-row"><span class="badge b-r">Competitive advantage</span><span class="badge b-r">Shorter sales cycles</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green);">
+      <div style="font-size:13px;font-weight:800;color:var(--green);margin-bottom:.65rem;">👤 The Prospect / Client</div>
+      <div style="font-size:11px;color:var(--tx2);line-height:1.75;">Sees a keyword report personalised to their domain and their competitors. Understands clearly which keywords to invest in and which to watch. Gets a 12-month traffic projection before signing anything. Leaves with a <strong style="color:var(--onyx);">one-page PDF</strong> they can review.</div>
+      <div class="tag-row"><span class="badge b-g">Informed decision</span><span class="badge b-g">Personalised forecast</span></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue);">
+      <div style="font-size:13px;font-weight:800;color:var(--blue);margin-bottom:.65rem;">🎓 Niloofar Mastali</div>
+      <div style="font-size:11px;color:var(--tx2);line-height:1.75;">Builds a live tool used by a real business, covering LLM API integration, pytrends time-series scoring, Random Forest + XGBoost dual models, SHAP explainability, and Streamlit deployment. Five distinct ML/AI skill areas in one deployed project.</div>
+      <div class="tag-row"><span class="badge b-b">ML portfolio</span><span class="badge b-b">Live public URL</span></div>
+    </div>
+  </div>
+
+  <div class="callout blue"><strong>Why three separate parts and not one big project?</strong> Because Part 1 is useful to the agency immediately — even before any ML is built. Part 2 adds the strategic layer on top. Part 3 adds the growth simulation and live alerts on top of that. At any point the agency can say "this is enough, let's stop here" and they still have something genuinely useful. This protects Niloofar and the agency both.</div>
+</div>
+
+<!-- ═══════════════════════════════
+     PART 1
+════════════════════════════════ -->
+<div class="pg" id="pg-p1">
+
+  <div class="part-hero p1">
+    <div class="part-num">1</div>
+    <div class="part-label">Part 1 · Weeks 1–3</div>
+    <div class="part-title">Keyword Intelligence Report</div>
+    <div class="part-sub">Discover what keywords your competitors rank for. Classify every keyword by type using the Claude API. Deliver a report the agency can use in client meetings before the project is even half built.</div>
+    <div class="part-meta">
+      <span class="part-chip">~3 weeks</span>
+      <span class="part-chip">~30 hrs total</span>
+      <span class="part-chip">Claude API classification</span>
+      <span class="part-chip">No ML training needed yet</span>
+    </div>
+    <div class="part-deliverable">Keyword intelligence report (PDF + CSV) — competitor keywords, type breakdown by %, stable vs volatile split for any prospect domain</div>
+    <div class="part-cta">After this the agency can <strong>use the report in client meetings immediately.</strong> Part 2 is only started once this is approved.</div>
+  </div>
+
+  <!-- WHAT HAPPENS IN THIS PART -->
+  <div class="h2" style="margin-bottom:.65rem;">What Niloofar builds in Part 1</div>
+  <div class="step"><div class="snum" style="background:var(--r10);color:var(--red);">1</div><div class="sc"><h4>Competitor keyword scraper</h4><p>Python script: takes a domain + up to 3 competitor domains → pulls their top-ranking keywords via SEMrush API. Returns keyword, search volume, difficulty, and current ranking position for each.</p><span class="tpill">requests</span><span class="tpill">SEMrush API</span><span class="tpill">pandas</span></div></div>
+  <div class="step"><div class="snum" style="background:var(--r10);color:var(--red);">2</div><div class="sc"><h4>LLM type classifier (Claude API)</h4><p>Sends each keyword to Claude with a structured prompt. Returns type (informational / commercial / transactional / news / trend / seasonal / question) plus a one-line reason. Batch: 100 keywords per call. Cost: under €0.01 per prospect.</p><div class="code">{"keyword":"ChatGPT für SEO","type":"trending","driver":"AI hype cycle","action":"fast_content"}</div></div></div>
+  <div class="step"><div class="snum" style="background:var(--r10);color:var(--red);">3</div><div class="sc"><h4>Keyword gap analysis</h4><p>Cross-references the prospect's current rankings against competitors. Highlights keywords the prospect is missing that competitors already rank for — the clearest immediate opportunity for the agency to present.</p></div></div>
+  <div class="step"><div class="snum" style="background:var(--r10);color:var(--red);">4</div><div class="sc"><h4>PDF report generator</h4><p>Auto-generates a branded one-page PDF: type breakdown pie chart, keyword gap table, top 10 opportunity keywords with volume and difficulty. The leave-behind from the sales meeting.</p><span class="tpill">FPDF2</span><span class="tpill">matplotlib</span></div></div>
+
+  <!-- WHAT HAPPENS NEXT -->
+  <div class="next-banner orange" style="margin-top:1rem;">
+    <div class="nb-icon">📋</div>
+    <div class="nb-body">
+      <div class="nb-title">What the agency does after Part 1</div>
+      <div class="nb-text">The salesperson opens the tool before a prospect meeting, types in the prospect's domain and their 2–3 known competitors, and downloads a PDF in under 30 seconds. In the meeting they walk through: <strong>here are all the keywords your competitors rank for that you don't, here is how they break down by type, and here is where your biggest immediate gaps are.</strong> The prospect sees their own competitive landscape for the first time. The call to action at the end of that meeting is: "sign with us and we build you an SEO strategy around these specific gaps."</div>
+      <span class="nb-cta red">✓ Agency can use this immediately</span>
+    </div>
+  </div>
+
+  <!-- DEMO for Part 1 -->
+  <div style="margin:1.4rem 0 .65rem;"><div class="ey">Part 1 — Live Demo</div></div>
+  <div class="demo-shell">
+    <div class="demo-titlebar">
+      <div class="demo-dot" style="background:#ff5f57;"></div><div class="demo-dot" style="background:#febc2e;"></div><div class="demo-dot" style="background:#28c840;"></div>
+      <span class="demo-bar-title">KeywordIQ — Part 1: Keyword Intelligence</span>
+    </div>
+    <div class="demo-stepper" id="st1">
+      <button class="dsb active" onclick="D1(1,this)"><span class="si">🌐</span>Input</button>
+      <button class="dsb" onclick="D1(2,this)"><span class="si">🔍</span>Discover</button>
+      <button class="dsb" onclick="D1(3,this)"><span class="si">🤖</span>Classify</button>
+      <button class="dsb" onclick="D1(4,this)"><span class="si">📋</span>Report</button>
+    </div>
+
+    <div class="demo-panel active" id="d1-1">
+      <div class="d-form">
+        <div class="d-title">🌐 Enter domain + competitors <span class="d-step-badge">Step 1 of 4</span></div>
+        <div class="d-grid">
+          <div class="d-field"><div class="d-lbl">Prospect domain</div><div class="d-val">example-client.at</div></div>
+          <div class="d-field"><div class="d-lbl">Industry</div><div class="d-val">B2B Software</div></div>
+          <div class="d-field"><div class="d-lbl">Competitor 1</div><div class="d-val">seo-werkstatt.at</div></div>
+          <div class="d-field"><div class="d-lbl">Competitor 2</div><div class="d-val">online-marketing.at</div></div>
+        </div>
+        <div class="d-note">✓ Domain metrics auto-fetched — DA 28 · 4,200 visits/mo · 180 referring domains · 6yr</div>
+        <div class="d-nav"><div></div><button class="d-btn primary" onclick="D1(2,getB('st1',2))">Discover keywords →</button></div>
+      </div>
+    </div>
+
+    <div class="demo-panel" id="d1-2">
+      <div class="d-title">🔍 Keywords discovered <span class="d-step-badge">247 total</span></div>
+      <div class="d-kpis">
+        <div class="d-kpi up"><div class="d-kpi-num">94</div><div class="d-kpi-lbl">Your domain</div></div>
+        <div class="d-kpi nt"><div class="d-kpi-num">73</div><div class="d-kpi-lbl">Competitor 1</div></div>
+        <div class="d-kpi nt"><div class="d-kpi-num">52</div><div class="d-kpi-lbl">Competitor 2</div></div>
+        <div class="d-kpi wn"><div class="d-kpi-num">28</div><div class="d-kpi-lbl">Gaps you miss</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border-radius:10px;padding:.7rem;margin-bottom:.8rem;">
+        <div style="font-size:10px;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:.5rem;">Keywords by source</div>
+        <div class="cw" style="height:160px;"><canvas id="ch1-disc"></canvas></div>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:.8rem;">Top gaps: <strong style="color:white;">KI SEO 2025 · Local SEO Österreich · ChatGPT für SEO · SEO Tools Vergleich</strong></div>
+      <div class="d-nav"><button class="d-btn" onclick="D1(1,getB('st1',1))">← Back</button><button class="d-btn primary" onclick="D1(3,getB('st1',3))">Classify with Claude →</button></div>
+    </div>
+
+    <div class="demo-panel" id="d1-3">
+      <div class="d-title">🤖 Claude API classification <span style="background:rgba(255,160,0,.2);color:#ffa000;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:800;margin-left:auto;">247 keywords · 1.8s · €0.003</span></div>
+      <div class="ktype-grid">
+        <div class="ktype-card"><div class="ktype-pct" style="color:#5dcaa5;">34%</div><div class="ktype-lbl">Informational</div><div class="ktype-n">84 kw</div></div>
+        <div class="ktype-card"><div class="ktype-pct" style="color:#ffa000;">22%</div><div class="ktype-lbl">Commercial</div><div class="ktype-n">54 kw</div></div>
+        <div class="ktype-card"><div class="ktype-pct" style="color:#5dcaa5;">18%</div><div class="ktype-lbl">Transact.</div><div class="ktype-n">44 kw</div></div>
+        <div class="ktype-card"><div class="ktype-pct" style="color:#f08080;">12%</div><div class="ktype-lbl">News</div><div class="ktype-n">30 kw</div></div>
+        <div class="ktype-card"><div class="ktype-pct" style="color:#60b3e8;">9%</div><div class="ktype-lbl">Trending</div><div class="ktype-n">22 kw</div></div>
+        <div class="ktype-card"><div class="ktype-pct" style="color:#c084fc;">5%</div><div class="ktype-lbl">Seasonal</div><div class="ktype-n">13 kw</div></div>
+      </div>
+      <div class="llm-blk">
+        <div class="llm-head"><span class="llm-tag">Claude</span><span class="llm-kw">ChatGPT für SEO</span></div>
+        <div class="llm-type" style="color:#60b3e8;">Trending · AI hype cycle</div>
+        <div class="llm-reason">Spiked 840% Nov 2022. Still elevated. High upside if you publish fast content — but risky as long-term core investment.</div>
+        <div class="llm-json">{"type":"trending","driver":"ai_hype","action":"fast_content_now"}</div>
+      </div>
+      <div class="llm-blk">
+        <div class="llm-head"><span class="llm-tag">Claude</span><span class="llm-kw">SEO Agentur Wien</span></div>
+        <div class="llm-type" style="color:#5dcaa5;">Transactional · Stable local demand</div>
+        <div class="llm-reason">Consistent year-round volume. Bottom-of-funnel service query. Invest steadily in link building and landing page optimisation.</div>
+        <div class="llm-json">{"type":"transactional","driver":"stable_demand","action":"core_investment"}</div>
+      </div>
+      <div class="d-nav"><button class="d-btn" onclick="D1(2,getB('st1',2))">← Back</button><button class="d-btn success" onclick="D1(4,getB('st1',4))">Generate report →</button></div>
+    </div>
+
+    <div class="demo-panel" id="d1-4">
+      <div class="d-title">📋 Keyword intelligence report <span class="d-step-badge">Ready to download</span></div>
+      <!-- PDF MOCK -->
+      <div style="background:var(--sur);border-radius:10px;padding:1rem;border:1px solid var(--bdr);">
+        <div style="display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--bdr);padding-bottom:.65rem;margin-bottom:.65rem;flex-wrap:wrap;">
+          <svg width="26" height="20" viewBox="0 0 60 50"><rect x="0" y="0" width="28" height="24" fill="#FFA000" rx="2"/><rect x="30" y="0" width="28" height="24" fill="#DC343B" rx="2"/><rect x="0" y="26" width="28" height="24" fill="#006DB0" rx="2"/><rect x="30" y="26" width="28" height="10" fill="#177245" rx="2"/></svg>
+          <div><div style="font-size:13px;font-weight:900;color:var(--red);">Keyword Intelligence Report</div><div style="font-size:10px;color:var(--tx3);">example-client.at vs. 2 competitors · 247 keywords · Part 1</div></div>
+        </div>
+        <div class="g3" style="margin-bottom:.75rem;">
+          <div style="background:var(--g10);border-radius:8px;padding:.6rem;text-align:center;"><div style="font-size:18px;font-weight:900;color:var(--green);">168</div><div style="font-size:9px;color:var(--tx3);margin-top:2px;">Stable keywords</div></div>
+          <div style="background:var(--r10);border-radius:8px;padding:.6rem;text-align:center;"><div style="font-size:18px;font-weight:900;color:var(--red);">79</div><div style="font-size:9px;color:var(--tx3);margin-top:2px;">Volatile / trending</div></div>
+          <div style="background:var(--b10);border-radius:8px;padding:.6rem;text-align:center;"><div style="font-size:18px;font-weight:900;color:var(--blue);">28</div><div style="font-size:9px;color:var(--tx3);margin-top:2px;">Gaps vs. competitors</div></div>
+        </div>
+        <div style="font-size:10px;color:var(--tx3);line-height:1.65;border-top:1px solid var(--bdr);padding-top:.55rem;">Top 3 immediate opportunities: <strong style="color:var(--onyx);">KI SEO 2025</strong> (vol 1,100 · KD 29 · trending) · <strong style="color:var(--onyx);">Local SEO Wien</strong> (vol 720 · KD 31 · stable) · <strong style="color:var(--onyx);">SEO Tools Vergleich</strong> (vol 2,200 · KD 44 · commercial)</div>
+      </div>
+      <div class="demo-next">
+        <div class="demo-next-title">👉 What happens now</div>
+        <div class="demo-next-body">The salesperson hands this PDF to the prospect. The prospect sees their competitive keyword landscape for the first time — which keywords their competitors rank for that they don't, and what type each keyword is. <strong>The agency's next ask is simple: "let us build an SEO strategy around these specific gaps and keywords." Part 2 turns this report into a live, interactive portfolio tool.</strong></div>
+        <button class="demo-next-action" onclick="T('p2',document.querySelectorAll('.ttab')[2])">See Part 2 →</button>
+      </div>
+      <div class="d-nav"><button class="d-btn" onclick="D1(3,getB('st1',3))">← Back</button><button class="d-btn success">⬇ Download PDF</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     PART 2
+════════════════════════════════ -->
+<div class="pg" id="pg-p2">
+
+  <div class="part-hero p2">
+    <div class="part-num">2</div>
+    <div class="part-label">Part 2 · Weeks 4–5</div>
+    <div class="part-title">Two-Portfolio Stability Dashboard</div>
+    <div class="part-sub">Take the keywords from Part 1. Score each one for stability using 24 months of Google Trends data. Split automatically into two portfolios: Stable (invest steadily) and Volatile (act fast or wait). A live Streamlit screen the agency can open in any meeting.</div>
+    <div class="part-meta">
+      <span class="part-chip">~2 weeks</span>
+      <span class="part-chip">~20 hrs total</span>
+      <span class="part-chip">pytrends stability scoring</span>
+      <span class="part-chip">Requires Part 1 complete</span>
+    </div>
+    <div class="part-deliverable">Live Streamlit dashboard — stability score per keyword, two-portfolio split, budget allocation recommendation, exportable to PDF</div>
+    <div class="part-cta">After this the agency has a <strong>live tool they open in sales meetings</strong> to show any prospect their recommended keyword strategy. Part 3 is only started once this is approved.</div>
+  </div>
+
+  <div class="h2" style="margin-bottom:.4rem;">What is a stability score?</div>
+  <p class="body" style="margin-bottom:.75rem;">Every keyword gets a score from 0 to 100 calculated from 24 months of Google Trends data. The formula is simple: <strong style="color:var(--onyx);">Stability = 100 − (standard deviation ÷ mean × 100).</strong> A score above 60 means the keyword has consistent, predictable volume every month — safe to invest in. Below 60 means the volume spikes and crashes based on external events — use it opportunistically, not as a core budget item.</p>
+  <div class="g2" style="margin-bottom:1rem;">
+    <div class="card" style="border-top:3px solid var(--green);">
+      <div style="font-size:13px;font-weight:800;color:var(--green);margin-bottom:.5rem;">🪨 Stable Portfolio — score 60–100</div>
+      <p style="font-size:11px;color:var(--tx2);line-height:1.7;margin-bottom:.5rem;">Consistent demand month over month. Invest here with link building, deep content, and technical SEO. This is 70–80% of budget. Predictable ROI. The growth simulator in Part 3 models this curve.</p>
+      <div style="font-size:10px;color:var(--green);font-weight:700;">Examples: "SEO Agentur Wien" (88) · "B2B Marketing" (79) · "Local SEO Wien" (76)</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--red);">
+      <div style="font-size:13px;font-weight:800;color:var(--red);margin-bottom:.5rem;">⚡ Volatile Watchlist — score 0–59</div>
+      <p style="font-size:11px;color:var(--tx2);line-height:1.7;margin-bottom:.5rem;">Spikes driven by news events, AI trends, regulation changes, or seasonal patterns. High upside if you act at the right moment. Fast content, no heavy link-building. 20–30% of budget. The alert system in Part 3 monitors these.</p>
+      <div style="font-size:10px;color:var(--red);font-weight:700;">Examples: "ChatGPT für SEO" (38) · "Google Algorithm Update" (12) · "SEO Weihnachten" (42)</div>
+    </div>
+  </div>
+
+  <div class="next-banner green">
+    <div class="nb-icon">🎯</div>
+    <div class="nb-body">
+      <div class="nb-title">What the agency does after Part 2</div>
+      <div class="nb-text">The salesperson opens the Streamlit dashboard during the prospect meeting. Together they look at the two-portfolio split. <strong>The stable portfolio becomes the basis of the SEO retainer contract — these are the keywords the agency will work on every month.</strong> The volatile watchlist becomes the basis of a content alert service — the agency will notify the client when any of these keywords starts trending, and publish fast content in response. The client now has a specific, named list of keywords they are paying to rank for, and a separate watchlist they will act on opportunistically. <strong>The call to action is: sign the contract for these specific stable keywords and this watchlist monitoring service.</strong></div>
+      <span class="nb-cta green">✓ Basis for a signed contract</span>
+    </div>
+  </div>
+
+  <div style="margin:1.4rem 0 .65rem;"><div class="ey">Part 2 — Live Demo</div></div>
+  <div class="demo-shell">
+    <div class="demo-titlebar">
+      <div class="demo-dot" style="background:#ff5f57;"></div><div class="demo-dot" style="background:#febc2e;"></div><div class="demo-dot" style="background:#28c840;"></div>
+      <span class="demo-bar-title">KeywordIQ — Part 2: Stability Portfolio</span>
+    </div>
+    <div class="demo-stepper" id="st2">
+      <button class="dsb active" onclick="D2(1,this)"><span class="si">📊</span>Scores</button>
+      <button class="dsb" onclick="D2(2,this)"><span class="si">🎯</span>Portfolios</button>
+      <button class="dsb" onclick="D2(3,this)"><span class="si">💰</span>Budget</button>
+    </div>
+
+    <div class="demo-panel active" id="d2-1">
+      <div class="d-title">📊 Stability scores <span style="font-size:10px;color:rgba(255,255,255,.38);font-weight:600;margin-left:4px;">24-month Google Trends · pytrends · free</span></div>
+      <div class="d-kpis">
+        <div class="d-kpi up"><div class="d-kpi-num">68%</div><div class="d-kpi-lbl">Stable (60+)</div></div>
+        <div class="d-kpi dn"><div class="d-kpi-num">32%</div><div class="d-kpi-lbl">Volatile (&lt;60)</div></div>
+        <div class="d-kpi nt"><div class="d-kpi-num">82</div><div class="d-kpi-lbl">Avg stable</div></div>
+        <div class="d-kpi wn"><div class="d-kpi-num">31</div><div class="d-kpi-lbl">Avg volatile</div></div>
+      </div>
+      <div class="tbl-wrap">
+        <table class="stab-tbl">
+          <thead><tr><th>Keyword</th><th>Type</th><th>Stability Score</th><th style="text-align:right;">Volume</th><th>Portfolio</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700;">SEO Agentur Wien</td><td><span class="vbadge vb-s">Transactional</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:88%;background:var(--green);"></div></div><span class="score-num" style="color:#5dcaa5;">88</span></div></td><td style="text-align:right;">1,300</td><td><span class="vbadge vb-s">🪨 Stable</span></td></tr>
+            <tr><td style="font-weight:700;">wie funktioniert SEO</td><td><span class="vbadge vb-s">Informational</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:79%;background:var(--green);"></div></div><span class="score-num" style="color:#5dcaa5;">79</span></div></td><td style="text-align:right;">2,400</td><td><span class="vbadge vb-s">🪨 Stable</span></td></tr>
+            <tr><td style="font-weight:700;">ChatGPT für SEO</td><td><span class="vbadge vb-t">Trending</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:38%;background:var(--blue);"></div></div><span class="score-num" style="color:#60b3e8;">38</span></div></td><td style="text-align:right;">3,800</td><td><span class="vbadge vb-t">⚡ Volatile</span></td></tr>
+            <tr><td style="font-weight:700;">Google Algo Update</td><td><span class="vbadge vb-n">News</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:12%;background:#8b5cf6;"></div></div><span class="score-num" style="color:#c084fc;">12</span></div></td><td style="text-align:right;">8,400</td><td><span class="vbadge vb-n">⚡ Volatile</span></td></tr>
+            <tr><td style="font-weight:700;">SEO Weihnachten</td><td><span class="vbadge vb-w">Seasonal</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:42%;background:var(--orange);"></div></div><span class="score-num" style="color:#ffa000;">42</span></div></td><td style="text-align:right;">890</td><td><span class="vbadge vb-w">⚡ Volatile</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-nav" style="margin-top:.8rem;"><div></div><button class="d-btn success" onclick="D2(2,getB('st2',2))">See portfolio split →</button></div>
+    </div>
+
+    <div class="demo-panel" id="d2-2">
+      <div class="d-title">🎯 Two portfolios</div>
+      <div class="port-split">
+        <div class="port-panel stable">
+          <div class="port-panel-head"><span style="font-size:17px;">🪨</span><div><div class="port-panel-title">Stable Portfolio</div><div class="port-panel-sub">168 kw · invest every month · 70–80% of budget</div></div></div>
+          <div class="port-kw-list">
+            <div class="port-kw"><div class="port-kw-name">SEO Agentur Wien</div><div class="port-kw-bar"><div class="port-kw-fill" style="width:88%;background:#177245;"></div></div><div class="port-kw-score" style="color:#5dcaa5;">88</div></div>
+            <div class="port-kw"><div class="port-kw-name">wie funktioniert SEO</div><div class="port-kw-bar"><div class="port-kw-fill" style="width:79%;background:#177245;"></div></div><div class="port-kw-score" style="color:#5dcaa5;">79</div></div>
+            <div class="port-kw"><div class="port-kw-name">Local SEO Wien</div><div class="port-kw-bar"><div class="port-kw-fill" style="width:76%;background:#177245;"></div></div><div class="port-kw-score" style="color:#5dcaa5;">76</div></div>
+            <div class="port-kw"><div class="port-kw-name">SEO Kosten Österreich</div><div class="port-kw-bar"><div class="port-kw-fill" style="width:71%;background:#177245;"></div></div><div class="port-kw-score" style="color:#5dcaa5;">71</div></div>
+          </div>
+        </div>
+        <div class="port-panel volatile">
+          <div class="port-panel-head"><span style="font-size:17px;">⚡</span><div><div class="port-panel-title">Volatile Watchlist</div><div class="port-panel-sub">79 kw · act fast when trending · 20–30% of budget</div></div></div>
+          <div class="port-kw-list">
+            <div class="port-kw"><div class="port-kw-name">ChatGPT für SEO <span style="font-size:8px;color:#60b3e8;">📈+340%</span></div><div class="port-kw-bar"><div class="port-kw-fill" style="width:38%;background:var(--blue);"></div></div><div class="port-kw-score" style="color:#f08080;">38</div></div>
+            <div class="port-kw"><div class="port-kw-name">KI SEO Tools <span style="font-size:8px;color:#60b3e8;">📈+210%</span></div><div class="port-kw-bar"><div class="port-kw-fill" style="width:29%;background:var(--blue);"></div></div><div class="port-kw-score" style="color:#f08080;">29</div></div>
+            <div class="port-kw"><div class="port-kw-name">SEO Weihnachten <span style="font-size:8px;color:#ffa000;">📅peak in 6wk</span></div><div class="port-kw-bar"><div class="port-kw-fill" style="width:42%;background:var(--orange);"></div></div><div class="port-kw-score" style="color:#ffa000;">42</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-next">
+        <div class="demo-next-title">👉 What happens now</div>
+        <div class="demo-next-body">The salesperson shows this split on screen in the meeting. <strong>The stable portfolio becomes the SEO retainer — the agency works these keywords every month.</strong> The volatile watchlist becomes a monitoring service — the agency alerts the client when any of these starts trending and publishes fast content. These two lists are literally what goes into the contract.</div>
+      </div>
+      <div class="d-nav"><button class="d-btn" onclick="D2(1,getB('st2',1))">← Back</button><button class="d-btn blue" onclick="D2(3,getB('st2',3))">Budget recommendation →</button></div>
+    </div>
+
+    <div class="demo-panel" id="d2-3">
+      <div class="d-title">💰 Budget allocation</div>
+      <div style="background:rgba(255,255,255,.04);border-radius:10px;padding:.7rem;margin-bottom:.8rem;">
+        <div style="font-size:10px;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:.5rem;">Recommended monthly budget split — based on portfolio analysis</div>
+        <div class="cw" style="height:175px;"><canvas id="ch2-budget"></canvas></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.8rem;">
+        <div style="background:rgba(23,114,69,.12);border:1px solid rgba(23,114,69,.22);border-radius:9px;padding:.75rem;">
+          <div style="font-size:10px;font-weight:800;color:#5dcaa5;margin-bottom:.4rem;">🪨 Stable Portfolio — 70%</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.55);line-height:1.65;">Link building, technical SEO, deep content for the 168 stable keywords. Consistent monthly work. Predictable compounding returns.</div>
+        </div>
+        <div style="background:rgba(220,52,59,.08);border:1px solid rgba(220,52,59,.18);border-radius:9px;padding:.75rem;">
+          <div style="font-size:10px;font-weight:800;color:#f08080;margin-bottom:.4rem;">⚡ Volatile Watchlist — 30%</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.55);line-height:1.65;">Fast content when alerts fire. No heavy link-building. Act fast, capture the spike, move on. Part 3 adds the live alert engine.</div>
+        </div>
+      </div>
+      <div class="demo-next">
+        <div class="demo-next-title">👉 What happens now</div>
+        <div class="demo-next-body">The prospect now has a complete keyword strategy with a recommended budget split. <strong>Part 3 adds the final layer: a 12-month growth simulation showing exactly what that investment is projected to deliver, and a live alert system for the volatile watchlist.</strong></div>
+        <button class="demo-next-action" onclick="T('p3',document.querySelectorAll('.ttab')[3])">See Part 3 →</button>
+      </div>
+      <div class="d-nav"><button class="d-btn" onclick="D2(2,getB('st2',2))">← Back</button><button class="d-btn success">⬇ Export strategy PDF</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     PART 3
+════════════════════════════════ -->
+<div class="pg" id="pg-p3">
+
+  <div class="part-hero p3">
+    <div class="part-num">3</div>
+    <div class="part-label">Part 3 · Weeks 6–8</div>
+    <div class="part-title">Growth Simulation + Live Alerts</div>
+    <div class="part-sub">ML models project traffic growth over 12 months — with and without SEO work. A live alert engine monitors the volatile watchlist and fires when any keyword starts trending. The prospect sees the cost of inaction before they sign.</div>
+    <div class="part-meta">
+      <span class="part-chip">~3 weeks</span>
+      <span class="part-chip">~30 hrs total</span>
+      <span class="part-chip">Random Forest + XGBoost</span>
+      <span class="part-chip">Requires Part 2 complete</span>
+    </div>
+    <div class="part-deliverable">Live Streamlit simulator — 12-month growth projections for stable portfolio, live trend alerts for volatile watchlist, full dashboard with competitor drift detection</div>
+    <div class="part-cta">After this the prospect sees <strong>their own personalised forecast before signing.</strong> The agency has a tool that works for every client, not just this one.</div>
+  </div>
+
+  <div class="h2" style="margin-bottom:.4rem;">What the simulation shows — explained simply</div>
+  <p class="body" style="margin-bottom:.75rem;">The ML model runs two parallel projections for the stable keyword portfolio, both starting from the prospect's current traffic today. A third line shows the bonus traffic from acting on volatile keyword alerts at the right moment.</p>
+  <div class="g2" style="margin-bottom:1rem;">
+    <div class="card" style="border-left:4px solid var(--red);">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:.5rem;"><div style="width:20px;height:3px;background:var(--red);border-radius:2px;"></div><div style="font-size:12px;font-weight:800;color:var(--onyx);">SEO Optimised (red line)</div></div>
+      <p style="font-size:11px;color:var(--tx2);line-height:1.7;">What happens if the agency works the stable keyword portfolio every month — link building, content, technical SEO. Modelled by a Random Forest trained on 120+ real client outcomes. This is the investment curve. This is what the client is paying for.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--bdr);">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:.5rem;"><div style="width:20px;height:0;border-top:2.5px dashed #bbb;"></div><div style="font-size:12px;font-weight:800;color:var(--onyx);">Organic Only (dashed line)</div></div>
+      <p style="font-size:11px;color:var(--tx2);line-height:1.7;">What happens if the client does nothing — no SEO, no agency. Domain drifts naturally upward at ~8–12% per year then plateaus. This is the cost of inaction. The gap between this and the red line is the value the agency delivers. Modelled from paused and churned clients.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--blue);">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:.5rem;"><div style="width:20px;height:3px;background:var(--blue);border-radius:2px;"></div><div style="font-size:12px;font-weight:800;color:var(--onyx);">Volatile Boost (blue line)</div></div>
+      <p style="font-size:11px;color:var(--tx2);line-height:1.7;">The extra traffic captured by publishing fast content when a volatile keyword spikes. This is optional and opportunistic — it comes on top of the stable portfolio investment. Example: when "ChatGPT für SEO" trended +340%, clients who published a guide that week captured 3–4× normal traffic for 8 weeks.</p>
+    </div>
+  </div>
+
+  <div class="next-banner blue">
+    <div class="nb-icon">🚀</div>
+    <div class="nb-body">
+      <div class="nb-title">What the agency and client do after Part 3</div>
+      <div class="nb-text">The salesperson opens the simulator in the meeting. The prospect types in nothing — the salesperson has already loaded their domain. The prospect sees their own traffic, their own competitors, and a projection of exactly where their site goes in 12 months — with and without SEO work. The gap between the two curves is the value of the contract. <strong>The call to action is: here is your 12-month forecast. Every month we report actual traffic vs. this projection. When any keyword on your watchlist starts trending, we alert you and publish content within 48 hours.</strong> After the meeting is over the prospect leaves with a branded PDF containing their personalised forecast. The agency follows up with a proposal built around the stable keyword list and the monitoring service.</div>
+      <span class="nb-cta blue">✓ Prospect signs with full visibility of expected ROI</span>
+    </div>
+  </div>
+
+  <div style="margin:1.4rem 0 .65rem;"><div class="ey">Part 3 — Live Demo</div></div>
+  <div class="demo-shell">
+    <div class="demo-titlebar">
+      <div class="demo-dot" style="background:#ff5f57;"></div><div class="demo-dot" style="background:#febc2e;"></div><div class="demo-dot" style="background:#28c840;"></div>
+      <span class="demo-bar-title">KeywordIQ — Part 3: Growth Simulation + Alerts</span>
+    </div>
+    <div class="demo-stepper" id="st3">
+      <button class="dsb active" onclick="D3(1,this)"><span class="si">🚀</span>Simulate</button>
+      <button class="dsb" onclick="D3(2,this)"><span class="si">🔔</span>Alerts</button>
+      <button class="dsb" onclick="D3(3,this)"><span class="si">📊</span>Dashboard</button>
+    </div>
+
+    <div class="demo-panel active" id="d3-1">
+      <div class="d-title">🚀 12-month growth simulation <span style="background:rgba(23,114,69,.25);color:#5dcaa5;font-size:9px;padding:2px 8px;border-radius:8px;font-weight:800;margin-left:auto;">ML · 1.4s</span></div>
+      <div class="sim-explain">
+        <div class="sim-explain-title">What are these three lines?</div>
+        <div class="sim-explain-row"><div class="sim-swatch" style="background:var(--red);"></div><div class="sim-explain-text"><strong>Red — SEO Optimised:</strong> projected traffic if the agency works the stable keyword portfolio every month. This is what the client pays for. Trained on 120+ real client outcomes.</div></div>
+        <div class="sim-explain-row"><div class="sim-swatch dashed"></div><div class="sim-explain-text"><strong>Dashed — Organic only:</strong> what happens if the client does nothing. Natural drift then plateau. Trained on paused clients. The gap between this and red is the value of the contract.</div></div>
+        <div class="sim-explain-row"><div class="sim-swatch" style="background:var(--blue);"></div><div class="sim-explain-text"><strong>Blue — Volatile boost:</strong> extra traffic from publishing fast content when a watchlist keyword spikes. Optional and on top of the stable investment. Example: "ChatGPT für SEO" trended +340% — clients who published that week captured a major traffic spike for 8 weeks.</div></div>
+      </div>
+      <div class="sim-legend">
+        <div class="sim-leg-item"><div style="width:16px;height:2.5px;background:var(--red);border-radius:2px;"></div><span>SEO optimised</span></div>
+        <div class="sim-leg-item"><div style="width:16px;height:0;border-top:2px dashed rgba(255,255,255,.3);"></div><span>Organic only</span></div>
+        <div class="sim-leg-item"><div style="width:16px;height:2.5px;background:var(--blue);border-radius:2px;"></div><span>Volatile boost</span></div>
+      </div>
+      <div class="cw" style="height:200px;margin-bottom:.8rem;"><canvas id="ch3-sim"></canvas></div>
+      <div class="d-kpis">
+        <div class="d-kpi up"><div class="d-kpi-num">+340%</div><div class="d-kpi-lbl">Traffic M6</div></div>
+        <div class="d-kpi up"><div class="d-kpi-num">+819%</div><div class="d-kpi-lbl">Traffic M12</div></div>
+        <div class="d-kpi nt"><div class="d-kpi-num">~88</div><div class="d-kpi-lbl">Leads/mo M12</div></div>
+        <div class="d-kpi wn"><div class="d-kpi-num">7.3×</div><div class="d-kpi-lbl">vs. doing nothing</div></div>
+      </div>
+      <div class="d-nav"><div></div><button class="d-btn primary" onclick="D3(2,getB('st3',2))">Live alerts →</button></div>
+    </div>
+
+    <div class="demo-panel" id="d3-2">
+      <div class="d-title">🔔 Volatile keyword alerts</div>
+      <div class="alert-blk red">
+        <div class="alert-icon">🚨</div>
+        <div class="alert-text"><strong>"ChatGPT für SEO" — trending +340% above 90-day baseline.</strong><br>4-week avg: 89 vs. baseline: 26. Rising 6 weeks straight. Claude: <strong>"Publish a comprehensive guide now. Competition is still low. Fast content will rank within 3–4 weeks."</strong></div>
+      </div>
+      <div class="alert-blk warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text"><strong>"KI SEO Tools" — trending +210%, not yet at action threshold.</strong><br>Rising 3 weeks. Claude: <strong>"Draft content now, publish when 4-week avg crosses 35% above baseline — expected 1–2 weeks."</strong></div>
+      </div>
+      <div class="alert-blk info">
+        <div class="alert-icon">📅</div>
+        <div class="alert-text"><strong>"SEO Weihnachten" — seasonal peak in 6 weeks.</strong><br>Annual spike every Nov–Dec, 4 years consistent. Claude: <strong>"Schedule publication for 10–15 Nov. This is predictable — don't miss the window."</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border-radius:10px;padding:.7rem;margin-bottom:.8rem;">
+        <div style="font-size:10px;color:rgba(255,255,255,.38);font-weight:700;margin-bottom:.45rem;">"ChatGPT für SEO" — 24-month Google Trends index (red dashed = 90-day baseline)</div>
+        <div class="cw" style="height:100px;"><canvas id="ch3-trend"></canvas></div>
+      </div>
+      <div class="d-nav"><button class="d-btn" onclick="D3(1,getB('st3',1))">← Back</button><button class="d-btn blue" onclick="D3(3,getB('st3',3))">Full dashboard →</button></div>
+    </div>
+
+    <div class="demo-panel" id="d3-3">
+      <div class="d-title">📊 Full intelligence dashboard</div>
+      <div class="d-kpis">
+        <div class="d-kpi up"><div class="d-kpi-num">168</div><div class="d-kpi-lbl">Stable kw</div></div>
+        <div class="d-kpi dn"><div class="d-kpi-num">79</div><div class="d-kpi-lbl">Volatile</div></div>
+        <div class="d-kpi wn"><div class="d-kpi-num">3</div><div class="d-kpi-lbl">Alerts now</div></div>
+        <div class="d-kpi up"><div class="d-kpi-num">+819%</div><div class="d-kpi-lbl">M12 projection</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px;margin-bottom:.85rem;">
+        <div style="background:rgba(255,255,255,.04);border-radius:10px;padding:.7rem;">
+          <div style="font-size:10px;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:.45rem;">Stable vs. volatile split</div>
+          <div class="cw" style="height:140px;"><canvas id="ch3-pie"></canvas></div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);border-radius:10px;padding:.7rem;">
+          <div style="font-size:10px;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:.45rem;">Budget allocation %</div>
+          <div class="cw" style="height:140px;"><canvas id="ch3-budget"></canvas></div>
+        </div>
+      </div>
+      <div style="background:rgba(0,109,176,.09);border:1px solid rgba(0,109,176,.2);border-radius:10px;padding:.8rem;margin-bottom:.8rem;">
+        <div style="font-size:11px;font-weight:800;color:#60b3e8;margin-bottom:.4rem;">📡 Competitor drift</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.58);line-height:1.7;">seo-werkstatt.at started ranking for 5 AI keywords it wasn't targeting 2 months ago. <strong style="color:white;">Publish content within 2 weeks before they consolidate authority.</strong></div>
+      </div>
+      <div class="demo-next">
+        <div class="demo-next-title">👉 What the prospect does now</div>
+        <div class="demo-next-body">They leave the meeting with a PDF containing their personalised forecast. <strong>They have seen, in their own data, the gap between doing nothing and investing in SEO. They have a named list of stable keywords the agency will work on, and a volatile watchlist with live monitoring.</strong> The agency follows up with a proposal: SEO retainer for the stable portfolio + content alert service for the volatile watchlist. Monthly reporting shows actual traffic vs. this projection.</div>
+        <button class="demo-next-action">⬇ Download personalised PDF</button>
+      </div>
+      <div class="d-nav"><button class="d-btn" onclick="D3(2,getB('st3',2))">← Back</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     DATA & ACCESS
+════════════════════════════════ -->
+<div class="pg" id="pg-data">
+  <div class="ey">Data Requirements</div>
+  <div class="h1" style="font-size:clamp(18px,4vw,24px);">What the agency must provide — per part</div>
+
+  <div class="callout red"><strong>Most critical ask:</strong> The agency needs to share historical client data and grant SEMrush/Ahrefs read access before Part 1 can begin. Everything else Niloofar collects herself for free.</div>
+
+  <div style="margin:1.1rem 0 .6rem;font-size:12px;font-weight:800;color:var(--red);">🔴 Agency must provide</div>
+  <div class="g2" style="margin-bottom:1.25rem;">
+    <div class="dc dc-ag">
+      <div class="dc-head"><div class="dc-title">📊 Historical Client Performance</div><span class="badge b-r">For Part 3 ML models</span></div>
+      <div class="dc-body">Needed to train the growth simulation models. Without this, Part 3 uses industry benchmarks — still functional but less accurate.</div>
+      <ul class="dc-list">
+        <li>Monthly organic traffic per client — 12+ months (GSC export)</li>
+        <li>Keyword rankings over time (Ahrefs or SEMrush export)</li>
+        <li>Lead volume per month from organic channel</li>
+        <li>Clients who paused or cancelled — critical for organic baseline model</li>
+      </ul>
+      <div class="dc-warn">⚠ Minimum 40 active clients + 5–10 paused clients. All anonymised.</div>
+    </div>
+    <div class="dc dc-ag">
+      <div class="dc-head"><div class="dc-title">🔑 SEMrush / Ahrefs Read Access</div><span class="badge b-r">For Part 1 discovery</span></div>
+      <div class="dc-body">Agency almost certainly has an active subscription (~€100–120/mo). Niloofar needs read-only access to pull competitor keyword rankings.</div>
+      <ul class="dc-list">
+        <li>Competitor domain → top 100 ranking keywords per competitor</li>
+        <li>Search volume and keyword difficulty per keyword</li>
+        <li>Historical ranking position changes</li>
+      </ul>
+      <div class="dc-warn">⚠ Without this, Part 1 is limited to ~10 free lookups/day. The project stalls here.</div>
+    </div>
+    <div class="dc dc-ag">
+      <div class="dc-head"><div class="dc-title">🤝 Data Agreement</div><span class="badge b-r">Sign before anything starts</span></div>
+      <div class="dc-body">One-page document. All client names replaced with IDs. Raw data deleted after training is complete.</div>
+      <ul class="dc-list">
+        <li>Client names → anonymous IDs (Client_001…)</li>
+        <li>Data used for model training only — not published or shared</li>
+        <li>Raw data deleted after Part 3 training</li>
+      </ul>
+      <div class="dc-warn">⚠ First document to sign at kick-off meeting. Protects both parties.</div>
+    </div>
+  </div>
+
+  <div style="margin:.9rem 0 .6rem;font-size:12px;font-weight:800;color:var(--green);">🟢 Niloofar collects — free, no agency needed</div>
+  <div class="g2">
+    <div class="dc dc-fr">
+      <div class="dc-head"><div class="dc-title">📈 Google Trends (pytrends)</div><span class="badge b-g">Free · Part 2</span></div>
+      <div class="dc-body">Entire stability scoring system. 24-month history per keyword. No API key needed. ~500 requests/hour.</div>
+      <ul class="dc-list"><li>24-month search volume history per keyword</li><li>Seasonal pattern detection</li><li>Rising and related queries</li></ul>
+      <div class="dc-ok">✓ Zero cost. Real time. Runs automatically.</div>
+    </div>
+    <div class="dc dc-fr">
+      <div class="dc-head"><div class="dc-title">🤖 Claude / GPT API</div><span class="badge b-g">~€0.01 per 1,000 kw · Part 1</span></div>
+      <div class="dc-body">Keyword type classification. No training data needed. Works immediately. One API call per batch of 100 keywords.</div>
+      <ul class="dc-list"><li>Type: informational / commercial / transactional / news / trend / seasonal</li><li>Returns type + reasoning per keyword</li></ul>
+      <div class="dc-ok">✓ 1,000 keywords classified for under €0.01.</div>
+    </div>
+    <div class="dc dc-fr">
+      <div class="dc-head"><div class="dc-title">🌐 Public Domain Metrics</div><span class="badge b-g">Free tiers · Part 1</span></div>
+      <div class="dc-body">DA, backlinks, site age — all publicly available. Automatable with Python scraper.</div>
+      <ul class="dc-list"><li>Domain Authority (Moz free · 10/day)</li><li>Referring domains (Ahrefs free)</li><li>Site age (WHOIS)</li><li>Indexed pages (Google: site:domain.com)</li></ul>
+      <div class="dc-ok">✓ Automatable. Uses existing web scraping skills.</div>
+    </div>
+  </div>
+
+  <div class="callout green" style="margin-top:1.1rem;"><strong>Kick-off checklist for agency meeting:</strong> (1) Sign anonymisation agreement · (2) Grant SEMrush/Ahrefs read access · (3) Export GSC + Ahrefs data for all clients · (4) Identify 5–10 paused clients specifically · (5) Agree review checkpoint after each Part before proceeding</div>
+</div>
+
+<!-- ═══════════════════════════════
+     SKILLS
+════════════════════════════════ -->
+<div class="pg" id="pg-skills">
+  <div class="ey">Skills Mapping</div>
+  <div class="h1" style="font-size:clamp(18px,4vw,24px);">What Niloofar brings vs. what to learn</div>
+  <p class="body" style="margin-bottom:.9rem;">55% already in her toolkit from IBM certifications, MSc coursework, and prior projects.</p>
+  <div class="skills-grid">
+    <div class="sk-col has">
+      <div class="sk-head">✓ Already knows</div>
+      <div class="sk-item">Python — IBM certified</div>
+      <div class="sk-item">Pandas / NumPy</div>
+      <div class="sk-item">Scikit-learn</div>
+      <div class="sk-item">Supervised learning</div>
+      <div class="sk-item">Regression modelling</div>
+      <div class="sk-item">EDA — IBM certified</div>
+      <div class="sk-item">Feature engineering</div>
+      <div class="sk-item">Web scraping — Duke cert</div>
+      <div class="sk-item">Jupyter / Colab</div>
+    </div>
+    <div class="sk-col part">
+      <div class="sk-head">⟳ Needs practice</div>
+      <div class="sk-item">Random Forest tuning</div>
+      <div class="sk-item">GridSearchCV</div>
+      <div class="sk-item">Time-series lag features</div>
+      <div class="sk-item">Rolling averages</div>
+      <div class="sk-item">Confidence intervals</div>
+      <div class="sk-item">API JSON parsing</div>
+    </div>
+    <div class="sk-col new">
+      <div class="sk-head">+ New to learn</div>
+      <div class="sk-item">pytrends library</div>
+      <div class="sk-item">LLM API (Claude/GPT)</div>
+      <div class="sk-item">XGBoost</div>
+      <div class="sk-item">SHAP explainability</div>
+      <div class="sk-item">Streamlit framework</div>
+      <div class="sk-item">FPDF2 — PDF gen</div>
+    </div>
+  </div>
+  <div style="margin-top:1.1rem;">
+    <div class="ey" style="margin-bottom:.45rem;">Readiness at project start</div>
+    <div class="rb">
+      <div class="rb-g" style="width:55%;">55% ready now</div>
+      <div class="rb-o" style="width:27%;">27% practice</div>
+      <div class="rb-r" style="width:18%;">18% new</div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:var(--tx2);margin-top:.35rem;">
+      <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>Already has (55%)</span>
+      <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--orange);display:inline-block;"></span>2–3 weeks practice (27%)</span>
+      <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block;"></span>1–2 days each (18%)</span>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:1rem;"><strong>Key new skill — LLM API integration (Part 1):</strong> 20 lines of Python to call Claude or GPT from a script. Highest-signal new item on any ML CV in 2025–26. The entire classification pipeline in Part 1 runs on this single skill. Learning time: 1–2 days.</div>
+</div>
+
+<footer>
+  <strong>© 2025 Niloofar Mastali.</strong> All rights reserved. This project proposal and all associated intellectual property belong exclusively to Niloofar Mastali. Prepared for SEO Agentur Wien.
+</footer>
+
+<script>
+// ── MAIN TAB NAV ──
+function T(id,btn){
+  document.querySelectorAll('.ttab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pg-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── GET STEPPER BUTTON BY INDEX ──
+function getB(stepperId,n){
+  return document.getElementById(stepperId).querySelectorAll('.dsb')[n-1];
+}
+
+// ── DEMO SWITCHERS ──
+var ch={};
+function switchDemo(stepperId,panelPrefix,n,btn){
+  document.getElementById(stepperId).querySelectorAll('.dsb').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('[id^="'+panelPrefix+'"]').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelPrefix+n).classList.add('active');
+  try{btn.scrollIntoView({inline:'center',block:'nearest'});}catch(e){}
+}
+function D1(n,btn){
+  switchDemo('st1','d1-',n,btn);
+  setTimeout(function(){
+    if(n===2 && !ch.disc) ch.disc=buildDisc();
+  },80);
+}
+function D2(n,btn){
+  switchDemo('st2','d2-',n,btn);
+  setTimeout(function(){
+    if(n===3 && !ch.bud2) ch.bud2=buildBud2();
+  },80);
+}
+function D3(n,btn){
+  switchDemo('st3','d3-',n,btn);
+  setTimeout(function(){
+    if(n===1 && !ch.sim) ch.sim=buildSim();
+    if(n===2 && !ch.trend) ch.trend=buildTrend();
+    if(n===3 && !ch.pie){ ch.pie=buildPie(); ch.bud3=buildBud3(); }
+  },80);
+}
+
+// ── CHART HELPERS ──
+var TX='rgba(255,255,255,.38)';
+var GR='rgba(255,255,255,.05)';
+function mkBar(id,labels,data,colors){
+  return new Chart(document.getElementById(id),{
+    type:'bar',
+    data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderRadius:5}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:TX,font:{family:'Figtree',size:9}},grid:{color:GR}},
+              y:{ticks:{color:TX,font:{family:'Figtree',size:9}},grid:{color:GR}}}}
+  });
+}
+function mkPie(id,labels,data,colors){
+  return new Chart(document.getElementById(id),{
+    type:'pie',data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,position:'bottom',labels:{color:'rgba(255,255,255,.5)',font:{family:'Figtree',size:9},boxWidth:10,padding:6}}}}
+  });
+}
+
+function buildDisc(){
+  return mkBar('ch1-disc',
+    ['Your domain','Competitor 1','Competitor 2','Competitor 3','Gaps you miss','Their exclusives'],
+    [94,73,52,28,24,41],
+    ['#177245','#006DB0','#006DB0','#6b6b68','#DC343B','#FFA000']
+  );
+}
+
+function buildBud2(){
+  return mkBar('ch2-budget',
+    ['Stable core','Volatile opp.','Content prod.','Link building','Monitoring'],
+    [42,22,18,12,6],
+    ['#177245','#DC343B','#FFA000','#006DB0','#6b6b68']
+  );
+}
+
+function buildSim(){
+  var m=Array.from({length:13},function(_,i){return 'M'+i;});
+  var b=4200;
+  var seo=m.map(function(_,i){return Math.round(b*(1+Math.pow(i/12,0.7)*8.2));});
+  var org=m.map(function(_,i){return Math.round(b*(1+i*0.004));});
+  var vol=m.map(function(_,i){return Math.round(b*0.28*(1+Math.pow(i/12,0.5)*4.1));});
+  return new Chart(document.getElementById('ch3-sim'),{
+    type:'line',
+    data:{labels:m,datasets:[
+      {label:'SEO optimised',data:seo,borderColor:'#DC343B',borderWidth:2.5,tension:0.42,fill:false,pointRadius:0},
+      {label:'Organic only',data:org,borderColor:'rgba(255,255,255,.28)',borderWidth:1.5,borderDash:[5,4],tension:0.38,fill:false,pointRadius:0},
+      {label:'Volatile boost',data:vol,borderColor:'#006DB0',borderWidth:1.5,tension:0.42,fill:false,pointRadius:0}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.y.toLocaleString()+' visits';}}}},
+      scales:{x:{ticks:{color:TX,font:{family:'Figtree',size:9}},grid:{color:GR}},
+              y:{ticks:{color:TX,font:{family:'Figtree',size:9},callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}},grid:{color:GR}}}}
+  });
+}
+
+function buildTrend(){
+  var mo=['J23','M23','M23','J23','S23','N23','J24','M24','M24','J24','S24','N24'];
+  var v=[8,10,11,85,70,78,84,90,89,94,91,96];
+  return new Chart(document.getElementById('ch3-trend'),{
+    type:'line',
+    data:{labels:mo,datasets:[
+      {data:v,borderColor:'#006DB0',borderWidth:2,tension:0.38,fill:true,backgroundColor:'rgba(0,109,176,.14)',pointRadius:0},
+      {data:Array(12).fill(26),borderColor:'rgba(220,52,59,.5)',borderWidth:1,borderDash:[5,4],fill:false,pointRadius:0}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:TX,font:{family:'Figtree',size:8},maxTicksLimit:6},grid:{color:GR}},
+              y:{ticks:{color:TX,font:{family:'Figtree',size:9}},grid:{color:GR}}}}
+  });
+}
+
+function buildPie(){
+  return mkPie('ch3-pie',['Stable (68%)','Volatile (32%)'],[68,32],['#177245','#DC343B']);
+}
+function buildBud3(){
+  return mkBar('ch3-budget',
+    ['Stable','Volatile','Content','Links','Monitor'],
+    [42,22,18,12,6],
+    ['#177245','#DC343B','#FFA000','#006DB0','#6b6b68']
+  );
+}
+</script>
+</body>
+</html>
